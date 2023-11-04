@@ -1,0 +1,54 @@
+ENVIRONMENT_VARIABLES:
+  - MAIN_URL: "https://undraw.co/illustrations"
+    SECOND_URL: "https://undraw.co/api/illustrations"
+    PAGE_EXT: "?page="
+    PAGE_COUNT: "3"
+    SCRAPER_THREAD_COUNT: "1"
+    DOWNLOAD_THREAD_COUNT: "10"
+    CLASS_NAME_SVG: "ClassicGrid__Media-sc-td9pmq-2 ffqsDq"
+    CLASS_NAME_TITLE: "ClassicGrid__Content-sc-td9pmq-3 jCxkJm"
+    IMAGE_DIR: "images/"
+
+QUEUES:
+    - NAME: "scraper_q"
+
+    - NAME: "download_q"
+
+WORKERS:
+    - SCRAPER_WORKER:
+        - CLASS: "ScrapeScheduler"
+          INPUT_QUEUE: "scrape_q"
+          OUTPUT_QUEUE: "download_q"
+          LOCATION: "main"
+          THREAD_COUNT: "1"
+
+    - DOWNLOAD_WORKER:
+        - CLASS: "DownloadScheduler"
+          INPUT_QUEUE: "download_q"
+          OUTPUT_QUEUE: ""
+          LOCATION: "main"
+          THREAD_COUNT: "10"
+
+CLASSES:
+  - NAME: "UnDraw"
+    LOCATION: "main"
+
+
+CLASS_FUNCTIONS:
+  - NAME: "scrape_svg"
+    LOCATION: "main"
+    ARGS:
+      - "pagecount"
+
+FUNCTIONS:
+  - NAME: "download_img"
+    LOCATION: "utils"
+    ARGS:
+      - ("url", "filename")
+
+  - NAME: "get_soup"
+    LOCATION: "utils"
+    ARGS:
+      - url
+
+

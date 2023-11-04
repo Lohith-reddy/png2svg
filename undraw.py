@@ -44,7 +44,7 @@ class UnDraw(threading.Thread):
         names = []
         download_dict = {}
         for i in range(0, self.page_count):
-            url = os.getenv("website_url")
+            url = os.getenv("WEBSITE_URL")
             if i == 0:
                 url = url
                 for link_1 in get_soup(url).find_all('div', "ClassicGrid__Media-sc-td9pmq-2 ffqsDq"):
@@ -54,7 +54,7 @@ class UnDraw(threading.Thread):
                     link_2 = str(link_2)
                     names.append(link_2.split(">")[1].split("<")[0])
             else:
-                url = os.getenv("second_url")
+                url = os.getenv("SECOND_URL")
                 url = url + self.page_ext + str(i)
                 link = get_soup(url)
                 link = str(link)

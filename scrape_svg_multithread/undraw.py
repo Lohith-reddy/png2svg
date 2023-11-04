@@ -107,5 +107,5 @@ def main():
 
 if __name__ == "__main__":
     main()
-    print(len(os.listdir("images")))
+    print(len(os.listdir("../images")))
 

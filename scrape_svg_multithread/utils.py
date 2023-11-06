@@ -1,14 +1,19 @@
 import requests
 from bs4 import BeautifulSoup as bs
+import yaml
+
+with open("config.yaml", 'r') as file:
+    yaml_data = yaml.safe_load(file)
+    file.close()
 
 
 def download_img(tup):
     title, img = tup
-    title = "images/" + title + ".svg"
+    title = yaml_data["ENVIRONMENT_VARIABLES"]["IMAGE_DIR"] + "/" + title + ".svg"
     with open(title, 'wb') as file:
         file.write(requests.get(img).content)
         file.close()
-    print("Downloaded:", title,"\n")
+    print("Downloaded:", title, "\n")
     return title
 
 

@@ -5,3 +5,5 @@ images
 web_scraping_svg/data/
 web_scraping_svg/download_links.pkl
 data/
+.run/
+__pycache__/
